@@ -4,21 +4,23 @@ export class AddItem extends React.Component {
     constructor() {
         super();
         this.state = {
-            description: ""
+            title: ""
         };
     }
 
-    onChange = (e) => {
-        let description = this.state.description;
-        description = e.target.value;
-        this.setState({ description });
+    onChange = e => {
+        let title = this.state.title;
+        title = e.target.value;
+        this.setState({ title });
     };
 
     onClick = () => {
         const { onAddItem } = this.props;
-        onAddItem(this.state.description);
+        if (this.state.title !== "") {
+            onAddItem(this.state.title);
+        }
         this.setState({
-            description: ""
+            title: ""
         });
     };
 
@@ -30,11 +32,16 @@ export class AddItem extends React.Component {
                 </span>
                 <input
                     style={{ marginRight: "1vh" }}
-                    placeholder="description"
-                    value={this.state.description}
+                    placeholder="title"
+                    value={this.state.title}
                     onChange={e => this.onChange(e)}
                 />
-                <button onClick={this.onClick}>Add item</button>
+                <button
+                    onClick={this.onClick}
+                    disabled={this.state.title === ""}
+                >
+                    Add item
+                </button>
             </div>
         );
     }
